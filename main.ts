@@ -1,8 +1,9 @@
-// Tiny stack VM for make.fun tiny-stack-vm-01: a faithful port of the ISA's reference VM
-// (kit program/generator/subject/ISA.md and vm.mjs). Opcode tables IM/PO/PU give, per opcode
-// byte 0x00..0x53, the immediate bytes, values popped and values pushed; '9' in IM marks an
-// unknown opcode. Traps: 2 underflow, 3 overflow, 4 div by zero, 5 bad opcode, 6 memory,
-// 7 call depth, 8 empty RET, 9 pc, 10 step limit, 11 output limit.
+// Tiny stack VM (make.fun tiny-stack-vm-01, ISA v1). Runs each program in
+// /input/<id> and writes /output/<id>/stdout.bin and exit.txt. IM, PO, PU
+// give each opcode byte 0x00..0x53 its immediate length, pops and pushes;
+// '9' in IM is not an opcode. Traps: 2 underflow, 3 overflow, 4 div by
+// zero, 5 bad opcode, 6 bad address, 7 call stack full, 8 empty RET,
+// 9 bad pc, 10 step limit, 11 output limit.
 import { mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 
