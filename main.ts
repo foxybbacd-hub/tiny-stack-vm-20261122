@@ -47,9 +47,11 @@ function run(p: Uint8Array, inp: Uint8Array): { out: Uint8Array; code: number } 
       else if (op === 0x12) r = Math.imul(a, b);
       else if (op === 0x13) {
         if (b === 0) return done(4);
+        // INT_MIN / -1 would overflow a 32-bit result; the ISA keeps INT_MIN.
         r = a === -2147483648 && b === -1 ? a : (a / b) | 0;
       } else if (op === 0x14) {
         if (b === 0) return done(4);
+        // a % -1 is 0 for every a, including INT_MIN.
         r = b === -1 ? 0 : (a % b) | 0;
       } else if (op === 0x15) {
         if (b === 0) return done(4);
